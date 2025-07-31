@@ -12,10 +12,11 @@ int MinMoves(int m, int n, vector<vector<int>>& grid, pair<int, int> source, pai
     queue<pair<pair<int, int>, int>> q;
     q.push({source, 0});
     visited[source.first][source.second] = true;
-    vector<pair<int, int>> directions = {{move.first, -move.second}, {-move.first, move.second}, {-move.first, move.second}, {move.first, -move.second}};
+    vector<pair<int, int>> directions = {{move.first, move.second}, {move.second, -move.first}, {-move.second, move.first}, {-move.first, -move.second}};
     while(!q.empty())
     {
         auto [position, distance] = q.front();
+        auto [x, y] = position;
         q.pop();
         if(position == destination)
         {

@@ -31,7 +31,7 @@ class Trie{
     {
         vector<int> result;
         TrieNode* node = root;
-        for(int i = index; i < s.size(); i++)
+        for(size_t i = index; i < s.size(); i++)
         {
             if(!node->children.count(s[i]))
             {
@@ -65,16 +65,18 @@ int Solve(const string& x, const string& y, int s, int r)
 {
     Trie triey, trierevy;
     int lenx = x.size();
-    for(int i=0; i<y.size(); i++)
+    for(size_t i=0; i<y.size(); i++)
     {
         triey.insert(y.substr(i));
     }
     string revy = y;
     reverse(revy.begin(), revy.end());
-    for(int i=0; i<revy.size(); i++)
+    for(size_t i=0; i<revy.size(); i++)
     {
         trierevy.insert(revy.substr(i));
     }
+    string revx = x;
+    reverse(revx.begin(), revx.end());
     priority_queue<State, vector<State>, greater<State>> pq;
     pq.push({0, 0, 0, 0, 0});
     vector<int> visited(lenx + 1, INT_MAX);
@@ -103,15 +105,17 @@ int Solve(const string& x, const string& y, int s, int r)
             int newfactor = newcosty * s + costrev * r;
             pq.push({nextPos, newsub, newcosty, costrev, newfactor});
         }
-        for(int nextPos : trierevy.GetMatches(x, pos))
+        int revpos = lenx - pos;
+        for(int nextPos : trierevy.GetMatches(revx, revpos))
         {
+            int matchedLength = nextPos - revpos;
+            int actualNext = pos + matchedLength;
             int newsub = substrings + 1;
             int newcostrev = costrev + 1;
             int newfactor = costy * s + newcostrev * r;
-            pq.push({nextPos, newsub, costy, newcostrev, newfactor});
+            pq.push({actualNext, newsub, costy, newcostrev, newfactor});
         }
     }
-    
     return -1;
 }
 

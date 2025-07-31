@@ -3,7 +3,7 @@ using namespace std;
 
 unordered_map<string, int> word = {{"one", 1}, {"two", 2}, {"three", 3}, {"four", 4}, {"five", 5}, {"six", 6}, {"seven", 7}, {"eight", 8}, {"nine", 9}, {"zero", 0}};
 
-unordered_map<string, char> operation = {{"add", '+'}, {"sub", '-'}, {"mul", '*'}, {"rem", '%'}, {"pow", ^}};
+unordered_map<string, char> operation = {{"add", '+'}, {"sub", '-'}, {"mul", '*'}, {"rem", '%'}, {"pow", '^'}};
 
 bool isOp(string& s)
 {
@@ -47,7 +47,7 @@ bool Parse(vector<string>& tokens, int& index, int& result)
     return false;
 }
 
-int ApplyOp(string op, int a, int n, bool& valid)
+int ApplyOp(string op, int a, int b, bool& valid)
 {
     valid = true;
     if(op == "add")
@@ -115,7 +115,7 @@ int Evaluate(string& s)
             {
                 return false;
             }
-            if(!eval(right))
+            if(!eval(st, right))
             {
                 return false;
             }
